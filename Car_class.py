@@ -17,17 +17,20 @@ class Car (object):
         self.park = False
         self.velocity = 18
 
+        #hit boxes used for collision
+        
         # self.hit_box1 = (self.x + 7, self.y, 109, 63)
         # self.hit_box2 = (self.x + 2, self.y + 1, 107, 61)
         # self.hit_box3 = (self.x + 3, self.y + 2, 58, 103)
         # self.hit_box4 = (self.x - 4, self.y, 62, 100)
 
     def draw_car(self, window):
-
+        #uploading each image position
         drive_left = pygame.image.load ('car_left.jpg')
         drive_right = pygame.image.load ('car_right.jpg')
         drive_up = pygame.image.load ('car_up.jpg')
         drive_down = pygame.image.load ('car_down.jpg')
+        #scaling the images to fit
         drive_left = pygame.transform.scale (drive_left, (96, 50))
         drive_right = pygame.transform.scale (drive_right, (96, 51,))
         drive_up = pygame.transform.scale (drive_up, (42, 93))
@@ -36,7 +39,8 @@ class Car (object):
         # self.hit_box2 = (self.x, self.y + 1, 99, 56)
         # self.hit_box3 = (self.x - 3, self.y + 2, 50, 93)
         # self.hit_box4 = (self.x - 3, self.y, 54, 90)
-
+        
+        #making sure car starts in the up position
         if self.driveCount == 0 and self.park == False:
             window.blit (drive_up, (self.x, self.y))
             # pygame.draw.rect (window, (255, 0, 0), self.hit_box, 2)
@@ -60,10 +64,12 @@ class Car (object):
             window.blit (drive_down, (self.x, self.y))
             # pygame.draw.rect (window, (255, 0, 0), self.hit_box4, 2)
             self.driveCount += 1
-
+    
+    #returning the dimensions of the car
     def getRect(self):
         return pygame.Rect (self.x, self.y, self.width, self.height // 2)
 
+    #defining collision
     def hit(self, cp, plat):
 
         if cp.getRect ().colliderect (self.getRect ()):
@@ -192,4 +198,4 @@ class Platform (object):
 
     def hit(self):
         pass
-        # reseting game window
+        
