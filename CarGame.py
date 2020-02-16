@@ -1,17 +1,20 @@
 import Car_class
 import pygame
 
+#initiating pygame
 pygame.init ()
+#initiating font
 pygame.font.init ()
 screen_height = 750
 screen_width = 1400
 window = pygame.display.set_mode ((screen_width, screen_height))
 pygame.display.set_caption ('Car Game')
+#Frames per second
 clock = pygame.time.Clock ()
 bg = pygame.image.load ('parking_lot.jpg')
 bg = pygame.transform.scale (bg, (screen_width, screen_height))
 
-
+#drawing parked cars, platforms,background, and main car, and score font
 def draw_window():
     window.blit (bg, (0, 0))
     cp_car1.draw_car (window)
@@ -84,7 +87,7 @@ def draw_window():
 
     pygame.display.update ()
 
-
+#creating variables to call class instances
 Main_car = Car_class.Car (1146, 644, 96, 96, 3)
 cp_car1 = Car_class.CPU (26, 108, 96, 96, 1)
 cp_car2 = Car_class.CPU (26, 180, 96, 96, 1)
@@ -160,12 +163,16 @@ park7 = Car_class.ParkSpot ((0, 255, 0), (490, 112, 16, 54), 1)
 park8 = Car_class.ParkSpot ((0, 255, 0), (1356, 119, 16, 54), 1)
 park9 = Car_class.ParkSpot ((0, 255, 0), (922, 623, 16, 54), 1)
 
+#list with all parked cars
 cp_list = [cp_car1, cp_car2, cp_car3, cp_car4, cp_car5, cp_car6, cp_car7, cp_car8, cp_car9, cp_car10, cp_car11,
            cp_car12, cp_car13, cp_car14, cp_car15, cp_car16, cp_car17, cp_car18, cp_car19, cp_car21, cp_car22,
            cp_car23, cp_car25, cp_car26, cp_car29, cp_car30,cp_car31, cp_car32, cp_car33, cp_car34, cp_car35, cp_car36, cp_car37, cp_car38, cp_car39, cp_car40, cp_car41,
            cp_car42, cp_car43, cp_car44, cp_car45, cp_car46, cp_car47, cp_car48, cp_car49, cp_car50,cp_car51]
+#list for platform barriers
 plat_list = [platform1, platform2, platform3]
+#list for optional empty parking spot
 park_list = [park1,park2,park3,park4,park5,park6,park7,park8,park9]
+
 num = 2
 
 font = pygame.font.SysFont ('comicansms', 70)
@@ -173,26 +180,31 @@ count = 0
 dam_count = 0
 cpmoveCount = []
 
+#main loop
 def main():
     run = True
     while run:
 
         scored = False
         Main_car.velocity = 18
+        
+        #initialing event key gets pressed
         keys = pygame.key.get_pressed ()
         clock.tick (36)
         # pygame.time.delay(10)
+        
+        #if you click exit at top right the game exits properly
         for event in pygame.event.get ():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
-
+            #when not initalizing a key prints car position for reference
             if event.type == pygame.KEYUP:
                 print (Main_car.x, Main_car.y)
                 Main_car.driveCount = 0
                 Main_car.park = True
 
-
+        #move left and use booleans to ensure the left image gets used
         if keys[pygame.K_LEFT] and Main_car.x > Main_car.velocity:
             Main_car.height = 50
             Main_car.width = 96
@@ -202,7 +214,7 @@ def main():
             Main_car.up = False
             Main_car.down = False
 
-
+        #move left and use booleans to ensure the right image gets used
         elif keys[pygame.K_RIGHT] and Main_car.x < screen_width - Main_car.width - Main_car.velocity:
             Main_car.height = 51
             Main_car.width = 96
@@ -211,7 +223,8 @@ def main():
             Main_car.right = True
             Main_car.up = False
             Main_car.down = False
-
+            
+        #move left and use booleans to ensure the up image gets used
         elif keys[pygame.K_UP] and Main_car.y > Main_car.velocity:
             Main_car.height = 93
             Main_car.width = 42
@@ -221,7 +234,7 @@ def main():
             Main_car.up = True
             Main_car.down = False
 
-
+        #move left and use booleans to ensure the down image gets used
         elif keys[pygame.K_DOWN] and Main_car.y < screen_height - Main_car.height - Main_car.velocity:
             Main_car.height = 86
             Main_car.width = 46
@@ -231,5 +244,6 @@ def main():
             Main_car.up = False
             Main_car.down = True
 
+            
         draw_window ()
 main()
